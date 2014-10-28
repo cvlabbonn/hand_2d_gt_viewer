@@ -12,74 +12,71 @@
 #include <QDebug>
 #include <fstream>
 
-struct AnnotationPatch
-{
-    double joint_X;
-    double joint_Y;
+struct AnnotationPatch {
+    double joint_x;
+    double joint_y;
 };
 
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow( QWidget *parent = 0 );
     ~MainWindow();
 
-    QString PATH_BASE_Base;
-    QString PATH_BASE_RGB;
-    QString PATH_BASE_RGBD;
-    QString PATH_BASE_DepthViz;
-    QString PATH_BASE_Anno;
+    QString path_base;
+    QString path_rgb;
+    QString path_rgbd;
+    QString path_depth;
+    QString path_annotations;
 
-    QString PATH_CURR_RGB;
-    QString PATH_CURR_RGBD;
-    QString PATH_CURR_DepthViz;
-    QString PATH_CURR_Anno;
-    QString PATH_CURR_DISPLAY;
+    QString path_current_rgb;
+    QString path_current_rgbd;
+    QString path_current_depth;
+    QString path_current_annotations;
+    QString path_display;
 
     int frame_step;
     int joint_radius;
-    int     FRAMES_TOTAL;
-    int     FRAMES_ID_START;
+    int frames_total;
+    int frames_start;
 
-    int     ID_NUMB_OF_DIGITS;
-    int     currFrameID;
-    QString currFrameID_STR;
-    QString currFrameID_STRshort;
+    int id_padding;
+    int current_frame_id;
+    QString current_frame_id_string;
+    QString current_frame_id_short_str;
 
-    cv::Mat imgCV;
-    cv::Mat imgCV_source;
-    cv::Mat imgCV_DEPTH;
-    QImage  imgQT;
+    cv::Mat current_img;
+    cv::Mat source_img;
+    QImage qt_img;
     bool ctrl_key;
     bool ctrl_click;
     bool shift_key;
     bool shift_click;
-    int selMouseX;
-    int selMouseY;
+    int sel_mouse_x;
+    int sel_mouse_y;
 
-    bool isSequenceLoaded;
+    bool is_sequence_loaded;
 
     QVector<AnnotationPatch> annotations;
     QVector<std::pair<QString, int> > ground_truth_paths;
 
-    void update_CURR_THINGS(  bool removeAnnotationsALL );
-    void update_CURR_THINGS(  int  newFrameID );
-    void update_CURR_frameID( int  newFrameID );
-    void update_CURR_Image();
-    void update_CURR_Display(bool spin_box=false);
-    void update_CURR_AnnotationsOVERLAY();
+    void update_all();
+    void update_all( int newFrameID );
+    void update_frame_id( int newFrameID );
+    void update_image();
+    void update_display();
+    void update_annotations();
     void update_CURR_Paths();
     void update_BASE_Paths();
     void update_list();
 
     void annotations_READ_CurrFrames();
-    int roundToInt(double num);
+    int roundToInt( double num );
 
     void print_CURR_Paths();
 
@@ -106,18 +103,12 @@ private slots:
     void Mouse_Pressed();
     void Mouse_Release();
 
-    void keyPressEvent(QKeyEvent *myKey);
-    void keyReleaseEvent(QKeyEvent *myKey);
+    void keyPressEvent( QKeyEvent *myKey );
+    void keyReleaseEvent( QKeyEvent *myKey );
 
     void on_myButton_Update_PATH_clicked();
 
-    void on_myRadioButton_Image_DepthREAL_clicked();
-
-    void on_fingerList_currentRowChanged(int currentRow);
-
-    void on_selFingerX_valueChanged(int arg1);
-
-    void on_selFingerY_valueChanged(int arg1);
+    void on_fingerList_currentRowChanged( int currentRow );
 
     void on_fingerList_itemSelectionChanged();
 
@@ -125,7 +116,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    void error_manager(int type);
+    void error_manager( int type );
     void update_path_array();
 };
 
