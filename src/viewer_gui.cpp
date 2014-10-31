@@ -24,7 +24,7 @@ void Viewer::new_path_selected(){
         QStringList fileList = currDir.entryList();
         frames_total = fileList.size();
         ui->myLabel_Img_TotalNumb->setText( QString::number( frames_total ) );
-        ui->myTabWidget->setEnabled( true );
+        ui->myGroupBox->setEnabled( true );
         update_all( frames_start );
         is_sequence_loaded = true;
 
@@ -70,4 +70,39 @@ void Viewer::colorize_black(){
     cv::Mat temp = cv::Mat::zeros( ui->myLabel_IMG->height(), ui->myLabel_IMG->width(), CV_8UC3 );
 
     ui->myLabel_IMG->setPixmap( QPixmap::fromImage( QImage((uchar*)temp.data, temp.cols, temp.rows, QImage::Format_RGB888 ) ) );
+}
+
+void Viewer::on_finger_list_currentRowChanged( int current_row ){
+    if ( current_row == -1 )
+        return;
+    ui->finger_x_coord->show();
+    ui->finger_y_coord->show();
+    ui->x_joints_label->show();
+    ui->y_joints_label->show();
+    ui->sel_joints_label->show();
+    ui->finger_x_coord->setText( QString::number( round_to_int( annotations[current_row].joint_x )));
+    ui->finger_y_coord->setText( QString::number( round_to_int( annotations[current_row].joint_y )));
+
+}
+
+
+void Viewer::on_finger_list_itemSelectionChanged(){
+    update_display();
+}
+
+
+int Viewer::round_to_int( double num ){
+    return std::floor( num + 0.5 );
+}
+
+
+void Viewer::on_browse_path_clicked(){
+    QString path = ui->path_to_load->toPlainText();
+    QString folder = QFileDialog::getExistingDirectory( this, tr( "Select Folder" ), path);
+
+    if ( folder != "" ) {
+        ui->path_to_load->setPlainText( folder );
+        new_path_selected();
+    }
+
 }

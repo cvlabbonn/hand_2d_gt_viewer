@@ -61,14 +61,14 @@ void Viewer::update_list(){
     ui->y_joints_label->hide();
     ui->sel_joints_label->hide();
 
-    QString side[] = { "Right", "Left" };
-    QString fingers[] = { "Little", "Ring", "Middle", "Pointer", "Thumb" };
+    QString side[] = { "Right", "Left " };
+    QString fingers[] = { "Little ", "Ring   ", "Middle ", "Pointer", "Thumb  " };
 
     for ( int iii = 0; iii < annotations.size(); iii++ ) {
         if ( iii < 14 )
-            ui->finger_list->addItem( side[0] + " hand - " + fingers[iii / 3] + " finger - joint " + QString::number( iii % 3 ));
+            ui->finger_list->addItem( side[0] + " hand - " + fingers[iii / 3] + "  finger - joint " + QString::number( iii % 3 ));
         else
-            ui->finger_list->addItem( side[1] + " hand - " + fingers[( iii - 14 ) / 3] + " finger - joint " + QString::number(( iii - 14 ) % 3 ));
+            ui->finger_list->addItem( side[1] + " hand - " + fingers[( iii - 14 ) / 3] + "  finger - joint " + QString::number(( iii - 14 ) % 3 ));
     }
 }
 

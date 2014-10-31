@@ -13,7 +13,7 @@ Viewer::Viewer( QWidget *parent ) :
     connect( ui->myLabel_IMG, SIGNAL( mouse_release()),   this, SLOT( mouse_release())   );
     ui->myLabel_IMG->setMouseTracking( true );
     colorize_black();
-    ui->myTabWidget->setEnabled( false );
+    ui->myGroupBox->setEnabled( false );
     is_sequence_loaded = false;
     ctrl_key = false;
     ctrl_click = false;
@@ -44,36 +44,4 @@ Viewer::~Viewer(){
 }
 
 
-void Viewer::on_finger_list_currentRowChanged( int current_row ){
-    if ( current_row == -1 )
-        return;
-    ui->finger_x_coord->show();
-    ui->finger_y_coord->show();
-    ui->x_joints_label->show();
-    ui->y_joints_label->show();
-    ui->sel_joints_label->show();
-    ui->finger_x_coord->setText( QString::number( round_to_int( annotations[current_row].joint_x )));
-    ui->finger_y_coord->setText( QString::number( round_to_int( annotations[current_row].joint_y )));
 
-}
-
-
-void Viewer::on_finger_list_itemSelectionChanged(){
-    update_display();
-}
-
-
-int Viewer::round_to_int( double num ){
-    return std::floor( num + 0.5 );
-}
-
-
-void Viewer::on_browse_path_clicked(){
-    QString filename = QFileDialog::getExistingDirectory( this, tr( "Select Folder" ));
-
-    if ( filename != "" ) {
-        ui->path_to_load->setPlainText( filename );
-        new_path_selected();
-    }
-
-}
