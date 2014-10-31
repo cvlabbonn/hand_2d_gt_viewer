@@ -1,13 +1,13 @@
-#include "mainwindow.h"
+#include "viewer.h"
 #include "ui_mainwindow.h"
 
 
-void MainWindow::annotations_READ_CurrFrames(){
+void Viewer::read_annotations(){
 
     QFile fileIN( path_current_annotations );
 
     fileIN.open( QIODevice::ReadOnly );
-    if (fileIN.size() == 0) {
+    if ( fileIN.size() == 0 ) {
         error_manager( 2 );
         fileIN.close();
         return;
@@ -16,7 +16,7 @@ void MainWindow::annotations_READ_CurrFrames(){
     annotations.clear();
     QTextStream myStreamIN( &fileIN );
 
-    while (!myStreamIN.atEnd()) {
+    while ( !myStreamIN.atEnd()) {
         AnnotationPatch temp;
         int dummyInt;
         myStreamIN >> dummyInt;

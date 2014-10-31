@@ -29,18 +29,18 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 set( VIEWER_SOURCES
         src/customlabel.cpp
         src/main.cpp
-        src/mainwindow.cpp
-        src/mainwindow_AnnoIO_IN.cpp
-        src/mainwindow_GUI.cpp
-        src/mainwindow_Paths.cpp
-        src/mainwindow_UI_Keyboard_Mouse.cpp
-        src/mainwindow_Updates.cpp
-        src/mainwindow_error.cpp
+        src/viewer.cpp
+        src/viewer_read.cpp
+        src/viewer_gui.cpp
+        src/viewer_path.cpp
+        src/viewer_input_callback.cpp
+        src/viewer_update.cpp
+        src/viewer_error.cpp
 )
 
 # set QT headers
 SET(QT_HEADERS
-    include/mainwindow.h
+    include/viewer.h
     include/customlabel.h
     )
 

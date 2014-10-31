@@ -1,9 +1,9 @@
-#include "mainwindow.h"
+#include "viewer.h"
 #include <QApplication>
 
 int main( int argc, char *argv[] ){
     QApplication a( argc, argv );
-    MainWindow w;
+    Viewer w;
 
     w.show();
 

@@ -8,20 +8,20 @@ CustomLabel::CustomLabel( QWidget *parent ) :
 void CustomLabel::mouseMoveEvent( QMouseEvent *ev ){
     this->mouse_X = ev->x();
     this->mouse_Y = ev->y();
-    emit Mouse_Pos();
+    emit mouse_position();
 }
 
 
 void CustomLabel::mousePressEvent( QMouseEvent *ev ){
-    emit Mouse_Pressed();
+    emit mouse_pressed();
 }
 
 
 void CustomLabel::leaveEvent( QEvent * ){
-    emit Mouse_Left();
+    emit mouse_left();
 }
 
 
-void CustomLabel::mouseReleaseEvent( QMouseEvent *ev ){
-    emit Mouse_Release();
+void CustomLabel::mouseReleaseEvent( QMouseEvent * ){
+    emit mouse_release();
 }

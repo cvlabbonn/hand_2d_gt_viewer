@@ -1,18 +1,18 @@
-#include "mainwindow.h"
+#include "viewer.h"
 #include "ui_mainwindow.h"
 
 #include <customlabel.h>
 
-MainWindow::MainWindow( QWidget *parent ) :
+Viewer::Viewer( QWidget *parent ) :
     QMainWindow( parent ),
     ui( new Ui::MainWindow ){
     ui->setupUi( this );
-    connect( ui->myLabel_IMG, SIGNAL( Mouse_Pos()),       this, SLOT( Mouse_Pos())       );
-    connect( ui->myLabel_IMG, SIGNAL( Mouse_Left()),      this, SLOT( Mouse_Left())      );
-    connect( ui->myLabel_IMG, SIGNAL( Mouse_Pressed()),   this, SLOT( Mouse_Pressed())   );
-    connect( ui->myLabel_IMG, SIGNAL( Mouse_Release()),   this, SLOT( Mouse_Release())   );
+    connect( ui->myLabel_IMG, SIGNAL( mouse_position()),  this, SLOT( mouse_position())  );
+    connect( ui->myLabel_IMG, SIGNAL( mouse_left()),      this, SLOT( mouse_left())      );
+    connect( ui->myLabel_IMG, SIGNAL( mouse_pressed()),   this, SLOT( mouse_pressed())   );
+    connect( ui->myLabel_IMG, SIGNAL( mouse_release()),   this, SLOT( mouse_release())   );
     ui->myLabel_IMG->setMouseTracking( true );
-    colorize_Black();
+    colorize_black();
     ui->myTabWidget->setEnabled( false );
     is_sequence_loaded = false;
     ctrl_key = false;
@@ -39,39 +39,41 @@ MainWindow::MainWindow( QWidget *parent ) :
 }
 
 
-MainWindow::~MainWindow(){
+Viewer::~Viewer(){
     delete ui;
 }
 
 
-void MainWindow::on_fingerList_currentRowChanged( int currentRow ){
-    if (currentRow == -1)
+void Viewer::on_finger_list_currentRowChanged( int current_row ){
+    if ( current_row == -1 )
         return;
     ui->finger_x_coord->show();
     ui->finger_y_coord->show();
     ui->x_joints_label->show();
     ui->y_joints_label->show();
     ui->sel_joints_label->show();
-    ui->finger_x_coord->setText( QString::number( roundToInt( annotations[currentRow].joint_x )));
-    ui->finger_y_coord->setText( QString::number( roundToInt( annotations[currentRow].joint_y )));
+    ui->finger_x_coord->setText( QString::number( round_to_int( annotations[current_row].joint_x )));
+    ui->finger_y_coord->setText( QString::number( round_to_int( annotations[current_row].joint_y )));
 
 }
 
 
-void MainWindow::on_fingerList_itemSelectionChanged(){
+void Viewer::on_finger_list_itemSelectionChanged(){
     update_display();
 }
 
 
-int MainWindow::roundToInt( double num ){
+int Viewer::round_to_int( double num ){
     return std::floor( num + 0.5 );
 }
 
 
-void MainWindow::on_browse_path_clicked(){
+void Viewer::on_browse_path_clicked(){
     QString filename = QFileDialog::getExistingDirectory( this, tr( "Select Folder" ));
 
-    ui->myTextEdit_PATH->setPlainText( filename );
-    on_myButton_Update_PATH_clicked();
+    if ( filename != "" ) {
+        ui->path_to_load->setPlainText( filename );
+        new_path_selected();
+    }
 
 }

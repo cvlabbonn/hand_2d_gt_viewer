@@ -1,24 +1,26 @@
-#include "mainwindow.h"
+#include "viewer.h"
 #include "ui_mainwindow.h"
 
 
 
 
-void MainWindow::on_myButton_Update_PATH_clicked(){
+void Viewer::new_path_selected(){
 
     try{
-
-        update_BASE_Paths();
-        update_path_array();
+        update_base_paths();
         QDir currDir = path_annotations;
-
-        if (currDir.exists() == false) {
+        if ( currDir.exists() == false ) {
             error_manager( 1 );
             return;
         }
+        if ( currDir.count() == 2 ) {
+            error_manager( 3 );
+            return;
+        }
+        update_path_array();
 
         QString filterStr = QString( "*.txt" );
-        currDir.setNameFilters( QStringList() << (filterStr) );
+        currDir.setNameFilters( QStringList() << ( filterStr ) );
         QStringList fileList = currDir.entryList();
         frames_total = fileList.size();
         ui->myLabel_Img_TotalNumb->setText( QString::number( frames_total ) );
@@ -27,44 +29,44 @@ void MainWindow::on_myButton_Update_PATH_clicked(){
         is_sequence_loaded = true;
 
     }
-    catch (...) {
+    catch ( ... ) {
         error_manager( 1 );
     }
 
 }
 
 
-void MainWindow::on_myButton_Next_clicked(){
+void Viewer::on_next_button_clicked(){
     update_all( current_frame_id + frame_step );
 }
 
 
-void MainWindow::on_myButton_Prev_clicked(){
+void Viewer::on_prev_button_clicked(){
     update_all( current_frame_id - frame_step );
 }
 
 
-void MainWindow::on_myButton_UpdateFrameID_clicked(){
-    update_all( ui->myTextEdit_FrameID->toPlainText().toInt() );
+void Viewer::on_update_frame_id_clicked(){
+    update_all( ui->frame_id_edit->toPlainText().toInt() );
 }
 
 
-void MainWindow::on_myRadioButton_Image_RGB_clicked(){
+void Viewer::on_radio_rgb_clicked(){
     update_all();
 }
 
 
-void MainWindow::on_myRadioButton_Image_RGBD_clicked(){
+void Viewer::on_radio_rgbd_clicked(){
     update_all();
 }
 
 
-void MainWindow::on_myRadioButton_Image_DepthVIZ_clicked(){
+void Viewer::on_radio_depth_clicked(){
     update_all();
 }
 
 
-void MainWindow::colorize_Black(){
+void Viewer::colorize_black(){
     cv::Mat temp = cv::Mat::zeros( ui->myLabel_IMG->height(), ui->myLabel_IMG->width(), CV_8UC3 );
 
     ui->myLabel_IMG->setPixmap( QPixmap::fromImage( QImage((uchar*)temp.data, temp.cols, temp.rows, QImage::Format_RGB888 ) ) );
