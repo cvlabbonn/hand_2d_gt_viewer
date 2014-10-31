@@ -15,7 +15,7 @@ void Viewer::update_base_paths(){
     path_rgb      = QString( path_base + "rgb"         + "/" );
     path_rgbd     = QString( path_base + "rgbd"        + "/" );
     path_depth = QString( path_base + "depth_viz"   + "/" );
-    path_annotations     = QString( path_base + "groundTruth" + "/" );
+    path_annotations     = QString( path_base + "joints_2D_GT" + "/" );
 
     QStringList myStringListFromPath;
     QRegExp regex( "/" );
