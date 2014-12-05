@@ -23,9 +23,9 @@ Run
     cd bin
     ./viewer
 
-In the gui window, click in the browse button and select the base folder of the dataset. For example: for dataset 313 you will have to select the subfolder inside called "1" that has the folders "rgb", "rgb", etc. below it.
+In the gui window, click in the browse button and select the base folder of the dataset. For example: for dataset 01 you will have to select the subfolder inside called "1" that has the folders "rgb", "rgb", etc. below it.
 
-    |-313
+    |-01
       |- 1 <-- folder to choose
          |- rgb
          |- rgbd
